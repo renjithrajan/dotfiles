@@ -1,0 +1,64 @@
+## My info
+
+set realname="Renjith Rajan"
+set from="renjith@yahoo-inc.com"
+
+## Imap stuff
+set folder=imap://localhost/
+set imap_user=renjith
+set mail_check=60
+set timeout=15
+set imap_check_subscribed=yes
+set ssl_starttls=no
+set spoolfile=imap://localhost/INBOX
+set header_cache=~/.mutt/hdcache/
+set copy=yes	#keep copies of outgoing mail.
+set record="=INBOX.Sent"
+
+## smtp stuff
+set sendmail="/usr/sbin/sendmail"
+
+## some behaviour settings
+set date_format="%a, %d %b %Y %H:%M:%S"
+set index_format="%4C %Z %(%a, %d %b %Y %H:%M:%S) %-15.15L (%4c) %s"
+set editor="vim"
+set user_agent
+unset autoedit
+set fast_reply=yes
+set edit_headers
+set sort=reverse-date-received
+set move=no
+unset beep
+set include=yes
+unset reply_self
+
+set attribution="On %d, %n wrote:"
+set forward_format="Fwd: %s"
+set indent_str="> "			
+
+set postpone=ask-no
+set quit=ask-yes
+
+set alias_file="~/.mutt/muttalias"
+
+## MIMEEEEEEEEEEEE
+set implicit_autoview
+auto_view text/html  application/x-pgp-message
+set mailcap_path="~/.mailcap"
+
+## COLORSssss
+
+source ~/.mutt/colors-light
+
+## headers
+
+ignore *                                        # weed out all headers
+unignore date from: to cc subject organization  # now show me these...
+
+## sigs
+
+set signature="~/.signature"
+
+
+## MACROSSSssss
+source ~/.mutt/macros

@@ -1,0 +1,128 @@
+# For security, only allow procmail to know certain things and drop any
+# non-user privileges that procmail may have had.
+
+MAILHOME=/home/mail
+DROPPRIVS=yes
+
+# Set library paths so various software we use works correctly
+LD_LIBRARY_PATH="/usr/local/lib:/usr/lib:$LD_LIBRARY_PATH"
+
+# Explicitly define helper app paths as env variables this saves us typing a
+# lot, and also keeps a massive path away from procmail should anything go
+# awry. If gmsgp isn't installed, you can use the standard xmessage utility,
+# but it's not as sexy.  Sexy is important.
+SED=/bin/sed
+SHELL=/bin/bash
+FORMAIL=/usr/bin/formail
+
+# My primary mail folder, this is so I don't have to retype it in rules
+# Maildir:
+MAILDIR=$MAILHOME/Maildir/
+
+# Default delivery folder.
+# Maildir:
+DEFAULT=$MAILHOME/Maildir/
+
+# Write a log so I can use mailstat to find out where my mail went
+LOGFILE=$MAILHOME/log/procmaillog
+LOGABSTRACT=all
+LINEBUF=4096
+
+# DUPLICATE REMOVAL
+# This rule uses formail to remove emails that have a message-id that has
+# already passed through the system. It keeps an 8K log.  "W" waits until it
+# gets the exit code from formail and filters if appropriate. the 'h' means
+# pipe the headers only. it uses a user-defined lockfile for this task.
+:0 Wh: msgid.lock
+| $FORMAIL -D 8192 $HOME/.msgid.cache
+
+# TRANSIENT RULES
+# this is so i can add and remove quick rules as I need them into a little
+# inconsequential file
+INCLUDERC=$HOME/.procmailrc.transient
+
+# MAILDIR LINES
+# Add Lines header for mutt with Maildirs. Mutt shows lines based on Lines
+# header.  We have to do this manually for Maildir delivered messages.
+#:0 Bfh
+#* H ?? !^Lines:
+#* -1^0
+#*  1^1 ^.*$
+#| formail -A "Lines: $="
+
+# Ascent
+:0:
+* ^From:.*yahoo@ascent-online.com
+.ascent/
+
+# Cron Daemon
+:0:
+* ^From:.*Cron Daemon
+.cronMails/
+
+# stag shit alerts
+:0:
+* ^Subject:.*Stag Log Monitor Alerts for
+.rootShit/
+
+# Mails from root (mostly alerts)
+:0:
+* ^From:.*root@
+.rootShit/
+
+# spam
+:0:
+* ^X-Spam-Detected:*
+.Spam/
+
+# CMR
+:0:
+* ^x-cms-generated:*
+.CMRs/
+
+# ad-ops-team junk
+:0:
+* ^Subject:.*(adclient package install on|Retire H/W for|host renames for|host migrations for|Adclient installation on)
+.adopsJunk/
+
+# ticket
+:0:
+* ^From:.*ticketupdate@
+* ^TO_.*renjith@
+.Siebel/
+
+#pages
+:0:
+* ^TO_.*(page-renjith|rm-oncall-pager|rm-oncall-pager-backup)@
+.NGDOncallPages/
+
+#pages
+:0:
+* ^TO_.*(page-renjith|gd-oncall-primary|gd-oncall-secondary|dapper-oncall.*)@
+.OncallPages/
+
+
+# ToMe
+:0:
+* ^TO_.*renjith@
+.ToMe/
+
+# ARTFUL PROCMAIL ALERT!
+# Here are two rules that will automagically filter *most* list emails based on
+# sane matches, such as list id. Very funky, and you almost never have to deal
+# with folder-making for lists again.
+
+# MOST LISTS - Automagically handle lists
+:0
+* ^((List-Id|X-(Mailing-)?List):(.*[<]\/[^>]*))
+{
+    LISTID=$MATCH
+
+    :0:
+    * LISTID ?? ^\/[^@\.]*
+    .Lists.${MATCH}/
+
+}
+
+:0:
+.Misc/

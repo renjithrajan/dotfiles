@@ -1,0 +1,29 @@
+set realname="Renjith Rajan"
+set from="renjith@yahoo-inc.com"
+set editor=vi
+set sort=reverse-date-sent
+set folder=imap://localhost/
+set imap_user=renjith
+set mail_check=60
+set timeout=15
+set imap_check_subscribed=yes
+set ssl_starttls=no
+set spoolfile=imap://localhost/INBOX
+set header_cache=~/.mutt/hdcache/
+
+
+color indicator blue default
+color index brightwhite default ~N       # color for new messages
+color status black yellow
+color attachment brightyellow default    # file attachments
+color search brightred default           # search matches
+color quoted brightyellow default        # quoted text in replies
+color quoted1 magenta default            # quoted text in replies
+color body cyan default "((ftp|http|https)://|news:)[^ >)\"\t]+"   # URLs
+color body cyan default "[-a-z_0-9.+]+@[-a-z_0-9.]+"               # email
+
+ignore *                                        # weed out all headers
+unignore date from: to cc subject organization  # now show me these...
+
+set signature="~/.signature"
+set move=no

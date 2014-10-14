@@ -1,0 +1,64 @@
+## My info
+
+set realname="Renjith Rajan"
+set from="renjith@yahoo-inc.com"
+set query_command = "/home/renjith/bin/mutt-ldap.pl '%s'"
+## Imap stuff
+set mbox_type=Maildir
+
+set spoolfile="/home/mail/Maildir/"
+set folder="/home/mail/Maildir/"
+set mask="^\\.[^\\.]"
+set record="+.Sent"
+set postponed="+.Drafts"
+
+mailboxes `cat /home/renjith/.mutt/mailboxes`
+
+## smtp stuff
+set sendmail="/usr/bin/msmtp"
+
+## some behaviour settings
+set date_format="%a, %d %b %Y %H:%M:%S"
+set index_format="%4C %Z %(%a, %d %b %Y %H:%M:%S) %-15.15L (%4c) %s"
+set editor="vim +':set textwidth=77' +':set wrap'"
+
+set user_agent
+unset autoedit
+set fast_reply=yes
+set edit_headers
+set sort=reverse-date-received
+set move=no
+unset beep
+set include=yes
+unset reply_self
+
+set attribution="On %d, %n wrote:"
+set forward_format="Fwd: %s"
+set indent_str="> "			
+
+set postpone=ask-no
+set quit=ask-yes
+
+set alias_file="~/.mutt/muttalias"
+
+## MIMEEEEEEEEEEEE
+set implicit_autoview
+auto_view text/html  application/x-pgp-message
+set mailcap_path="~/.mailcap"
+
+## COLORSssss
+
+source ~/.mutt/colors-light
+
+## headers
+
+ignore *                                        # weed out all headers
+unignore date from: to cc subject organization  # now show me these...
+
+## sigs
+
+set signature="~/.signature"
+
+
+## MACROSSSssss
+source ~/.mutt/macros

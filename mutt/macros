@@ -1,0 +1,5 @@
+macro index "\Cx" "<change-folder>?"
+macro pager "\Cx" "<change-folder>?"
+macro index \Cr \
+  "<tag-pattern>~N\n<tag-prefix><clear-flag>N" \
+  "Mark all new messages as read"

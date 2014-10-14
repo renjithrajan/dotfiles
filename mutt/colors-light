@@ -1,0 +1,16 @@
+color indicator blue default
+color index yellow default ~N       # color for new messages
+color status    brightgreen blue
+color attachment brightyellow default    # file attachments
+color search brightred default           # search matches
+color hdrdefault cyan default
+
+color quoted yellow default        # quoted text in replies
+color quoted1 green default            # quoted text in replies
+
+
+color body cyan default "(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+"   # URLs
+color body cyan default "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+"               # email
+
+color header red default "^From:" # Important headers
+color header magenta default "^Subject:" # Important headers
